@@ -9,7 +9,7 @@
  */
 var bikeStore = bikeStore || {};
 
-(function(wallet) {
+function wallet_def(wallet) {
 
   /**
    * Static path to the JWT validation URL.
@@ -108,14 +108,20 @@ var bikeStore = bikeStore || {};
    * buttons and appends the latest button.
    * @param {DOM Node} params The created Wallet button.
    */
-  wallet.buttonReady = function(params) {
-    // Remove any previously appended buttons.
-    $('#gWalletDiv').remove();
-    // Append Wallet button to page.
-    var buttonDiv = document.createElement('div');
-    buttonDiv.id = 'gWalletDiv';
-    buttonDiv.appendChild(params.walletButtonElement);
-    document.getElementById('buybutton').appendChild(buttonDiv);
+  wallet.buttonReady1 = function(params) {
+    $('#gWalletDiv1').remove();
+    var buttonDiv1 = document.createElement('div');
+    buttonDiv1.id = 'gWalletDiv1';
+    buttonDiv1.appendChild(params.walletButtonElement);
+    document.getElementById('buybutton1').appendChild(buttonDiv1);
+  };
+
+  wallet.buttonReady0 = function(params) {
+    $('#gWalletDiv0').remove();
+    var buttonDiv0 = document.createElement('div');
+    buttonDiv0.id = 'gWalletDiv0';
+    buttonDiv0.appendChild(params.walletButtonElement);
+    document.getElementById('buybutton0').appendChild(buttonDiv0);
   };
 
   /**
@@ -129,7 +135,13 @@ var bikeStore = bikeStore || {};
           'jwt' : jwt,
           'success' : wallet.maskedWalletSuccess,
           'failure' : wallet.maskedWalletFailure,
-          'ready' : wallet.buttonReady
+          'ready' : wallet.buttonReady0
+        });
+        google.wallet.online.createWalletButton({
+          'jwt' : jwt,
+          'success' : wallet.maskedWalletSuccess,
+          'failure' : wallet.maskedWalletFailure,
+          'ready' : wallet.buttonReady1
         });
       });
     }
@@ -287,4 +299,9 @@ var bikeStore = bikeStore || {};
     });
     wallet.authorize();
   };
-})(window.bikeStore.Wallet = window.bikeStore.Wallet || {});
+}
+
+window.bikeStore.Wallet = window.bikeStore.Wallet || {};
+
+wallet_def(window.bikeStore.Wallet);
+
